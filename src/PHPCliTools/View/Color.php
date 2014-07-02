@@ -9,7 +9,7 @@ namespace PHPCliTools\View;
  * @package PHPCliTools
  * @subpackage View
  */
-class Color {
+abstract class Color {
 
     /**
      * Array of name and values of fonts color

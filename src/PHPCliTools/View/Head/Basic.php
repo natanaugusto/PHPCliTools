@@ -13,6 +13,10 @@ use PHPCliTools\View\Color as PCTColor;
  */
 class Basic implements \PHPCliTools\View\HeadInterface {
 
+    /**
+     * Array of header types. [font=coloroffont,backgroud=colorofbackground
+     * @var array
+     */
     protected static $types = array(
         'normal' => array(
             'font' => 'white',
@@ -28,24 +32,48 @@ class Basic implements \PHPCliTools\View\HeadInterface {
         )
     );
 
+    /**
+     * Get or print a header on Cli
+     * 
+     * @param string $text
+     * @param string $type
+     * @param boolean $print
+     * @return string|void
+     */
     public function get($text, $type = 'normal', $print = true) {
         $head = PCTColor::getLine($text, self::getType($type)->font, self::getType($type)->background);
-        
+
         if ($print) {
             print $head;
         } else {
             return $head;
         }
     }
-    
+
+    /**
+     * Get a object if is predefined
+     * 
+     * @param string $type
+     * @return object
+     */
     protected function getType($type = 'normal') {
-        return (object)self::$types[$type];
+        return (object) self::$types[$type];
     }
-    
+
+    /**
+     * Return types array
+     * 
+     * @return array
+     */
     public function getTypes() {
         return self::$types;
     }
 
+    /**
+     * Set a types array
+     * 
+     * @param array $types
+     */
     public function setTypes($types) {
         self::$types = $types;
     }
