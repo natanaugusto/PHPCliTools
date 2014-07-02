@@ -1,0 +1,19 @@
+{
+    "autoload": {
+        "psr-0": {
+            "PHPCliTools\\": "src/"
+        }
+    },
+    "name": "PHPCliTools",
+    "description": "Tools to help interactions CLI(Command-Line Interface)",
+    "keywords":["CLI(Command-Line Interface)", "Command", "Line", "Interface", "CliTools"],
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "phpdocumentor/phpdocumentor": "2.*"
+    }
+}
