@@ -1,4 +1,4 @@
-ColorCli
+PHPCliTools
 ========
 
-Class to help display colored text on CLI(Command-Line Interface)
+Tools to help interactions CLI(Command-Line Interface)
