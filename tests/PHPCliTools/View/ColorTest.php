@@ -4,10 +4,10 @@
  * Use PHPUnit Extension
  */
 use PHPUnit_Framework_TestCase as PHPUnit;
-use PHPCliTools\View\Color as Color;
+use PHPCliTools\View\Color as PCTColor;
 
 /**
- * Test of class PHPCliTools\Color
+ * Test of class PHPCliTools\View\Color
  * @author Natan Augusto <natanaugusto@gmail.com>
  */
 class ColorTest extends PHPUnit {
@@ -44,11 +44,10 @@ class ColorTest extends PHPUnit {
     }
 
     public function testColorString() {
-        $this->assertEquals("\033[0;35m\033[43mTesting Colors class\033[0m", Color::getString('Testing Colors class', 'purple', 'yellow'), "
+        $this->assertEquals("\033[0;35m\033[43mTesting Colors class\033[0m", PCTColor::getString('Testing Colors class', 'purple', 'yellow'), "
 			Can't write string with font color purple and background yellow");
 
-        $this->assertEquals("\033[0;35m\033[43mTesting Colors class\033[0m\n", Color::getString('Testing Colors class', 'purple', 'yellow', true), "
-			Can't write string with font color purple and background yellow with a breakline");
+        $this->assertEquals("\n\033[0;35m\033[43mTesting Colors class\n\033[0m", PCTColor::getLine('Testing Colors class', 'purple', 'yellow'));
     }
 
     public function tearDown() {

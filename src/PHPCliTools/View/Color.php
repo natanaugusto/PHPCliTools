@@ -3,7 +3,7 @@
 namespace PHPCliTools\View;
 
 /**
- * ColorCli provide methods to print colorful strings on CLI(Command Line Interface)
+ * PHPCliTools\View\Color provide methods to print colorful strings on CLI(Command Line Interface)
  * 
  * @author Natan Augusto <natanaugusto@gmail.com>
  * @package PHPCliTools
@@ -59,10 +59,9 @@ class Color {
      * @param string $string The string to be returned with the code coloring
      * @param string $fontColor The name of color to coloring the string
      * @param string $backgroundColor The name of color to coloring the string background
-     * @param boolean $breakline Inser a breakline on the end of $string
      * @return string The string formated to show colorful on CLI
      */
-    public static function getString($string, $fontColor = '', $backgroundColor = '', $breakline = false) {
+    public static function getString($string, $fontColor = '', $backgroundColor = '') {
         $strReturn = "";
 
         if (isset(self::$fontColors[$fontColor])) {
@@ -74,7 +73,30 @@ class Color {
         }
 
         $strReturn .= $string . "\033[0m";
-        return $strReturn . ($breakline ? "\n" : "");
+        return $strReturn;
+    }
+    
+    /**
+     * Generate a colorful line
+     *
+     * @param string $string The string to be returned with the code coloring
+     * @param string $fontColor The name of color to coloring the string
+     * @param string $backgroundColor The name of color to coloring the string background
+     * @return string The string formated to show colorful on CLI
+     */
+    public static function getLine($string, $fontColor = '', $backgroundColor = '') {
+        $strReturn = "\n";
+
+        if (isset(self::$fontColors[$fontColor])) {
+            $strReturn .= "\033[" . self::$fontColors[$fontColor] . "m";
+        }
+
+        if (isset(self::$backgroundColors[$backgroundColor])) {
+            $strReturn .= "\033[" . self::$backgroundColors[$backgroundColor] . "m";
+        }
+
+        $strReturn .= $string . "\n\033[0m";
+        return $strReturn;
     }
 
     /**
