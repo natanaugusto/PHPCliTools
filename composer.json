@@ -9,6 +9,12 @@
     "keywords":["CLI(Command-Line Interface)", "Command", "Line", "Interface", "CliTools"],
     "type": "library",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Natan Augusto",
+            "email": "natanaugusto@gmail.com"
+        }
+    ],
     "require": {
         "php": ">=5.3"
     },
