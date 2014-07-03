@@ -44,10 +44,21 @@ class ColorTest extends PHPUnit {
     }
 
     public function testColorString() {
-        $this->assertEquals("\033[0;35m\033[43mTesting Colors class\033[0m", PCTColor::getString('Testing Colors class', 'purple', 'yellow'), "
+        $s = "\033[0;35m\033[43mTesting Colors class\033[0m";
+
+        $this->assertEquals($s, PCTColor::getString('Testing Colors class', 'purple', 'yellow', false), "
 			Can't write string with font color purple and background yellow");
 
-        $this->assertEquals("\n\033[0;35m\033[43mTesting Colors class\n\033[0m", PCTColor::getLine('Testing Colors class', 'purple', 'yellow'));
+        $this->expectOutputString($s);
+        PCTColor::getString('Testing Colors class', 'purple', 'yellow');
+    }
+
+    public function testColorLine() {
+        $s = "\n\033[0;35m\033[43mTesting Colors class\n\033[0m";
+        $this->assertEquals($s, PCTColor::getLine('Testing Colors class', 'purple', 'yellow', false));
+
+        $this->expectOutputString($s);
+        PCTColor::getLine('Testing Colors class', 'purple', 'yellow');
     }
 
     public function tearDown() {

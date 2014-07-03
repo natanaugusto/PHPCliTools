@@ -59,9 +59,10 @@ abstract class Color {
      * @param string $string The string to be returned with the code coloring
      * @param string $fontColor The name of color to coloring the string
      * @param string $backgroundColor The name of color to coloring the string background
-     * @return string The string formated to show colorful on CLI
+     * @param boolean $print Set false to not print
+     * @return string|void The string formated to show colorful on CLI
      */
-    public static function getString($string, $fontColor = '', $backgroundColor = '') {
+    public static function getString($string, $fontColor = '', $backgroundColor = '', $print = true) {
         $strReturn = "";
 
         if (isset(self::$fontColors[$fontColor])) {
@@ -73,7 +74,12 @@ abstract class Color {
         }
 
         $strReturn .= $string . "\033[0m";
-        return $strReturn;
+        
+        if($print) {
+            print $strReturn;
+        } else {
+            return $strReturn;
+        }
     }
     
     /**
@@ -82,9 +88,10 @@ abstract class Color {
      * @param string $string The string to be returned with the code coloring
      * @param string $fontColor The name of color to coloring the string
      * @param string $backgroundColor The name of color to coloring the string background
+     * @param boolean $print Set false to not print
      * @return string The string formated to show colorful on CLI
      */
-    public static function getLine($string, $fontColor = '', $backgroundColor = '') {
+    public static function getLine($string, $fontColor = '', $backgroundColor = '', $print = true) {
         $strReturn = "\n";
 
         if (isset(self::$fontColors[$fontColor])) {
@@ -96,7 +103,12 @@ abstract class Color {
         }
 
         $strReturn .= $string . "\n\033[0m";
-        return $strReturn;
+        
+        if($print) {
+            print $strReturn;
+        } else {
+            return $strReturn;
+        }
     }
 
     /**
