@@ -2,6 +2,8 @@
 
 namespace PHPCliTools;
 
+use Exception;
+
 /**
  * PHPCliTools\Directory provide methods to work with directories CLI(Command Line Interface)
  * 
@@ -10,6 +12,11 @@ namespace PHPCliTools;
  */
 abstract class Directory {
 
+    /**
+     * Return the complete path of a directory
+     * @param string $path
+     * @return string
+     */
     public function getPath($path = null) {
         $path = is_null($path) ? false : $path;
 
@@ -21,6 +28,15 @@ abstract class Directory {
         return $path;
     }
 
+    /**
+     * Make a diectory
+     * (The parameter recursive of php function make always is true)
+     * @param string $path
+     * @param boolean $overwrite
+     * @param int $mode
+     * @return boolean
+     * @throws Exception
+     */
     public function make($path = null, $overwrite = false, $mode = 0777) {
         $path = self::getPath($path);
 
@@ -32,7 +48,7 @@ abstract class Directory {
                     return true;
                 }
 
-                return false;
+                throw new Exception('The directory will not be modify! Try use $overwrite like true!');
             case false:
                 if ($overwrite) {
                     self::delete($path);
@@ -43,17 +59,47 @@ abstract class Directory {
                 return mkdir($path, $mode, true);
         }
     }
-
-    public function delete($path = null) {
-        $path = self::getPath($path);
-
-        if (self::isEmpty($path)) {
-            return rmdir($path);
-        } else {
-            return false;
+    
+    public function getTreeByPath($path, $recursive = false) {
+        if(!is_string($path)) {
+            throw new Exception('The $path parameter not is a string!');
         }
     }
+    
+    public function tree($callback, $paths, $params = null) {
+        
+    }
 
+    /**
+     * Delete a directory
+     * @param string $path
+     * @param boolean $recursive
+     * @return boolean
+     */
+    public function delete($path = null, $recursive = false) {
+        $path = self::getPath($path);
+
+        switch (self::isEmpty($path)) {
+            case null:
+                return true;
+            case true:
+                return rmdir($path);
+            case false:
+                if ($recursive == true) {
+                    return false;
+                }
+                return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Verify if directory is empty or not.
+     * (Return null case the directory not exist)
+     * @param string $path
+     * @return null|boolean
+     */
     public function isEmpty($path = null) {
         $path = self::getPath($path);
 

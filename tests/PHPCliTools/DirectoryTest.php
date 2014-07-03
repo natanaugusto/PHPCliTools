@@ -14,8 +14,21 @@ use PHPCliTools\Directory as PCTDirectory;
 class FolderTest extends PHPUnit {
 
     public function setUp() {
-        //Don't work
         $this->path = realpath('.');
+        $this->tree = $tree = array(
+            'tree/tree1',
+            'tree/tree2',
+            'tree/tree3' => array(
+                'treechild'
+            )
+        );
+        $this->tree_src = array(
+            'PHPCliTools' => array(
+                'View' => array(
+                    'Head'
+                )
+            )
+        );
         parent::setUp();
     }
 
@@ -25,8 +38,9 @@ class FolderTest extends PHPUnit {
 
     public function testGetPath() {
         $this->assertEquals($this->path . DIRECTORY_SEPARATOR . 'bla', PCTDirectory::getPath('bla'));
-        $this->assertEquals(null, PCTDirectory::getPath());
-        $this->assertEquals(false, PCTDirectory::getPath());
+        $this->assertEquals($this->path . DIRECTORY_SEPARATOR . 'test.php', PCTDirectory::getPath('test.php/'));
+        $this->assertEmpty(PCTDirectory::getPath('test.php'));
+        $this->assertEmpty(PCTDirectory::getPath());
     }
 
     public function testIsEmpty() {
@@ -50,6 +64,31 @@ class FolderTest extends PHPUnit {
         $this->assertEquals(false, PCTDirectory::make('make'), 'The directory make/ was created!');
         $this->assertEquals(true, PCTDirectory::make('make', true), 'The directory make/ could not be created!');
         $this->assertEquals(true, PCTDirectory::isEmpty('make'));
+    }
+
+    public function testGetTreeByPath() {
+        $this->assertEquals(array('PHPCliTools'), PCTDirectory::getTreeByPath('src'));
+        $this->assertEquals($tree, PCTDirectory::getTreeByPath('src', true));
+        $this->assertEquals(null, PCTDirectory::getTreeByPath('no_exis'));
+    }
+
+    public function testTree() {
+        $this->assertEquals(true, PCTDirectory::delete('tree', true));
+
+        $tree = array(
+            'tree/tree1',
+            'tree/tree2',
+            'tree/tree3' => array(
+                'treechild'
+            )
+        );
+
+        //Delete tree
+        $this->assertEquals(true, PCTDirectory::tree('PCTDirectory::delete', 'tree'));
+        $this->assertEquals(true, PCTDirectory::tree('PCTDirectory::make', $tree, array(':path:', true)));
+        $this->assertEquals(true, PCTDirectory::tree('PCTDirectory::delete', 'tree', array(':path:', true)));
+        //Create tree
+        $this->assertEquals(true, PCTDirectory::tree('PCTDirectory::make', $tree));
     }
 
 }
